@@ -10,8 +10,10 @@ To Do
     -load in PNG
         -search for # of files in folder            DONE
         -load into array                            DONE
+    -greadient backgound 
     -particals
     -movement
+    -how to fullscreen?
    
 */
 //------------------------------------------Imports----------------------------
