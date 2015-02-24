@@ -54,7 +54,7 @@ float windY = 1;
 //-----------------------------------------End Global--------------------------
 
 void setup() {
-  size(2500, 1440);
+  size(500, 500);
     frameRate(30);
   //background colors
   background(60,187,250);
@@ -63,7 +63,8 @@ void setup() {
   
    //load in PNG
     //check for # of files
-    String path = sketchPath+"/img/"; 
+    //String path = sketchPath+"/img/"; 
+    String path = sketchPath+"/img2/"; //second path Ben was using
     File[] files = listFiles(path); 
     print(path+"\n");   // total number of files
     println(files.length+"\n"); //how many files are here
@@ -73,24 +74,30 @@ void setup() {
       pics[i]=loadImage(files[i].getAbsolutePath());
       }              
 flock = new Flock();
-pics[3].loadPixels();
+for (int j = 0; j < pics.length; j++) {
+pics[j].loadPixels();
+int picWidth = pics[j].width; //assume that images are square
+int x = int(random(30,width-30)); //randomly place the image somewhere
+int y = int(random(30,height-30)); //on the screen
 
-
-for(int i = 0; i < pics[3].pixels.length; i += 1){
+for(int i = 0; i < pics[j].pixels.length; i += 1){
  //int posX = pics[1].pixels[i]/pics[1].height;
  //int posY = pics[1].pixels[i]/pics[1].width;
-  if(pics[3].pixels[i] != color(255, 255,255)){
-   flock.addBoid(new Boid(i%16+width/2,int((i/16)+height/2)));
+  if(pics[j].pixels[i] != color(255, 255,255)){
+    
+   flock.addBoid(new Boid(i%picWidth+x,int((i/picWidth)+y)));
   }
  //flock.addBoid(new Boid(width/2, height/2)); 
 }
 
-//flocking starts here
+}
+
+//Old flocking do not use (see above code)
   //flock = new Flock(); 
   // Add an initial set of boids into the system
-  for (int i = 0; i < 600; i++) {
+  //for (int i = 0; i < 600; i++) {
     //flock.addBoid(new Boid(width/2,height/2));
-  }
+  //}
 }
 
 File[] listFiles(String dir) {
@@ -108,10 +115,10 @@ void draw() {
   background(c1);
     //setGradient(0, 0, height, width, c1, c2); //background gradientK
   flock.run();
-  image(pics[3],width/2,height/2);
+  //image(pics[0],width/2,height/2);
 }
 
 // Add a new boid into the System
-void mousePressed() {
-  flock.addBoid(new Boid(mouseX,mouseY));
-}
+//void mousePressed() {
+//  flock.addBoid(new Boid(mouseX,mouseY));
+//}
