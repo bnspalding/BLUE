@@ -149,7 +149,7 @@ class Boid {
     return steer;
   }
 
-  // Alignment
+  // Alignment                                                                                                    REMOVE ME
   // For every nearby boid in the system, calculate the average velocity
   PVector align (ArrayList<Boid> boids) {
     float neighbordist = 50;

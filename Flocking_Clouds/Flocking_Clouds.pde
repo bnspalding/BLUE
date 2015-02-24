@@ -27,7 +27,8 @@ To Do
         -load pixels into array        
     -gredient backgound                             DONE
         -maybe have this fin flux
-    -particles
+    -boid
+        -translate pixel array to boid
     -movement
         -x and y axis
         -resize
@@ -53,7 +54,7 @@ float windY = 1;
 //-----------------------------------------End Global--------------------------
 
 void setup() {
-  size(500, 500);
+  size(2500, 1440);
     frameRate(30);
   //background colors
   background(60,187,250);
@@ -72,12 +73,14 @@ void setup() {
       pics[i]=loadImage(files[i].getAbsolutePath());
       }              
 flock = new Flock();
-pics[1].loadPixels();
-for(int i = 0; i < pics[1].pixels.length; i += 800){
+pics[3].loadPixels();
+
+
+for(int i = 0; i < pics[3].pixels.length; i += 1){
  //int posX = pics[1].pixels[i]/pics[1].height;
  //int posY = pics[1].pixels[i]/pics[1].width;
-  if(pics[1].pixels[i] == color(0, 0, 0)){
-   flock.addBoid(new Boid(width/2, height/2));
+  if(pics[3].pixels[i] != color(255, 255,255)){
+   flock.addBoid(new Boid(i%16+width/2,int((i/16)+height/2)));
   }
  //flock.addBoid(new Boid(width/2, height/2)); 
 }
@@ -86,7 +89,7 @@ for(int i = 0; i < pics[1].pixels.length; i += 800){
   //flock = new Flock(); 
   // Add an initial set of boids into the system
   for (int i = 0; i < 600; i++) {
-    flock.addBoid(new Boid(width/2,height/2));
+    //flock.addBoid(new Boid(width/2,height/2));
   }
 }
 
@@ -105,6 +108,7 @@ void draw() {
   background(c1);
     //setGradient(0, 0, height, width, c1, c2); //background gradientK
   flock.run();
+  image(pics[3],width/2,height/2);
 }
 
 // Add a new boid into the System
