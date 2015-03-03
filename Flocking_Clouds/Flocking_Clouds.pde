@@ -22,12 +22,19 @@ To Do
     -boid
         -only load a couple random imgs to boid     DONE 5 random images
         -translate pixel array to boid              DONE
+        -cohesion and seperation fixed              BEN
+          -must hold shape consistantly
+        
     -movement
-        -load offscreen
-        -if offscreen, unload img
-        -x and y axis
-        -resize
-        -wind variable? for direction
+        -wind variable? for direction               ADRIAN
+          -variations in speed and accel
+          -replace facing with speed changer
+        -load offscreen                             ADRIAN
+          -if offscreen, unload img, trigger new 
+        -resize                                     BEN
+          -using boids not img 
+    -Assets
+        -MORE pics !!                               SEAN
     -how to fullscreen?
    
    
