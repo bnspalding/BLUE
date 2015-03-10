@@ -55,7 +55,7 @@ float windY = 1;
 //-----------------------------------------End Global--------------------------
 
 void setup() {
-  size(2500, 1400);
+  size(/*2*/400, /*1*/400);
   frameRate(30);
   //background colors
   background(60,187,250);
@@ -79,21 +79,7 @@ flock = new Flock();
 
 for (int j = 0; j < 10; j++) {       //runs J times.. best at 10 or less with 20x20 images
   int rand = int(random(pics.length)); //chooses random images from pics array length
-  
-  pics[rand].loadPixels();
-  //pics[rand].resize(0,int(random(20,50)));  //attempt to rezies the images fails and turns into squares
-  int picWidth = pics[rand].width; //assume that images are square
-  int x = int(random(30,width-30)); //randomly place the image somewhere
-  int y = int(random(30,height-30)); //on the screen
-  for(int i = 0; i < pics[rand].pixels.length; i += 1){
-   //int posX = pics[1].pixels[i]/pics[1].height;
-   //int posY = pics[1].pixels[i]/pics[1].width;
-    if(pics[rand].pixels[i] != color(255, 255,255)){
-      
-       flock.addBoid(new Boid(i%picWidth+x,int((i/picWidth)+y)));
-    }
-   
-  }
+  spawnCloud();
 
 }
 
@@ -111,6 +97,11 @@ void draw() {
   setGradient(1200,0,height, width,c1,c2);
   flock.run();
   
+  if(flock.deaths >= 200){
+   spawnCloud();
+   flock.deaths = 0; 
+  }
+  
 }
 
 //------------------------------------------------------------------------functions below-------------------------------------------------------
@@ -126,6 +117,29 @@ File[] listFiles(String dir) {
        return null;
      }
     }
+
+void spawnCloud(){
+  int rand = int(random(pics.length)); //chooses random images from pics array length
+  
+  pics[rand].loadPixels();
+  //pics[rand].resize(0,int(random(20,50)));  //attempt to rezies the images fails and turns into squares
+  int picWidth = pics[rand].width; //assume that images are square
+  int x = int(random(30,width-30)); //randomly place the image somewhere
+  int y = int(random(30,height-30)); //on the screen]
+  float randSpeed = random(1F);
+  for(int i = 0; i < pics[rand].pixels.length; i += 1){
+   //int posX = pics[1].pixels[i]/pics[1].height;
+   //int posY = pics[1].pixels[i]/pics[1].width;
+    if(pics[rand].pixels[i] != color(255, 255,255)){
+       Boid b = new Boid(i%picWidth-10, int((i/picWidth)+y));
+       //b.maxspeed = randSpeed;
+       b.wind = new PVector(randSpeed+random(.1), 0);
+       flock.addBoid(b);
+    }
+   
+  }
+  
+}
 
 
 //background gradient

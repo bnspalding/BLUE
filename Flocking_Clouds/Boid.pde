@@ -7,7 +7,9 @@ class Boid {
   PVector acceleration;
   float r;
   float maxforce;    // Maximum steering force
-  float maxspeed;    // Maximum speed
+  public float maxspeed;    // Maximum speed
+  public boolean dead = false;
+  public PVector wind = new PVector(2, 0);
 
     Boid(float x, float y) {
     acceleration = new PVector(0, 0);
@@ -26,10 +28,12 @@ class Boid {
   }
 
   void run(ArrayList<Boid> boids) {
+    if(!dead){
     flock(boids);
     update();
     borders();
     render();
+    }
   }
 
   void applyForce(PVector force) {
@@ -105,10 +109,22 @@ class Boid {
 
   // Wraparound
   void borders() {
-    if (location.x < -r) location.x = width+r;
-    if (location.y < -r) location.y = height+r;
-    if (location.x > width+r) location.x = -r;
-    if (location.y > height+r) location.y = -r;
+    if (location.x < -r){
+      //location.x = width+r;
+      //dead = true;
+    }
+    if (location.y < -r){
+      location.y = height+r;
+      dead = true;
+    }
+    if (location.x > width+r){
+      location.x = -r;
+      dead = true;
+    }
+    if (location.y > height+r){
+      location.y = -r;
+      dead = true;
+    }
   }
 
   // Separation
@@ -150,36 +166,37 @@ class Boid {
     return steer;
   }
 
-  // Alignment  (COMMENTED OUT)                                                                                                  REMOVE ME
+  /* Alignment  (COMMENTED OUT)                                                                                                  REMOVE ME
   // For every nearby boid in the system, calculate the average velocity
-//  PVector align (ArrayList<Boid> boids) {
-//    float neighbordist = 50;
-//    PVector sum = new PVector(0, 0);
-//    int count = 0;
-//    for (Boid other : boids) {
-//      float d = PVector.dist(location, other.location);
-//      if ((d > 0) && (d < neighbordist)) {
-//        sum.add(other.velocity);
-//        count++;
-//      }
-//    }
-//    if (count > 0) {
-//      sum.div((float)count);
-//      // First two lines of code below could be condensed with new PVector setMag() method
-//      // Not using this method until Processing.js catches up
-//      // sum.setMag(maxspeed);
-//
-//      // Implement Reynolds: Steering = Desired - Velocity
-//      sum.normalize();
-//      sum.mult(maxspeed);
-//      PVector steer = PVector.sub(sum, velocity);
-//      steer.limit(maxforce);
-//      return steer;
-//    } 
-//    else {
-//      return new PVector(0, 0);
-//    }
-//  }
+  PVector align (ArrayList<Boid> boids) {
+    float neighbordist = 50;
+    PVector sum = new PVector(0, 0);
+    int count = 0;
+    for (Boid other : boids) {
+      float d = PVector.dist(location, other.location);
+      if ((d > 0) && (d < neighbordist)) {
+        sum.add(other.velocity);
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum.div((float)count);
+      // First two lines of code below could be condensed with new PVector setMag() method
+      // Not using this method until Processing.js catches up
+      // sum.setMag(maxspeed);
+
+      // Implement Reynolds: Steering = Desired - Velocity
+      sum.normalize();
+      sum.mult(maxspeed);
+      PVector steer = PVector.sub(sum, velocity);
+      steer.limit(maxforce);
+      return steer;
+    } 
+    else {
+      return new PVector(0, 0);
+    }
+  }
+*/
 
   // Cohesion
   // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
@@ -205,7 +222,7 @@ class Boid {
   
   //Wind - added in 'update' currently
   PVector wind () {
-    return new PVector (.5, 0);
+    return wind;
   }
   
 }
