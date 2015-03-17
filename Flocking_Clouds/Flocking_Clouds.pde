@@ -51,6 +51,8 @@ color c1,c2; // colors for background
 float windX = 0;
 float windY = 1;
 
+float stretch = 3;
+
 
 //-----------------------------------------End Global--------------------------
 
@@ -131,7 +133,7 @@ void spawnCloud(){
    //int posX = pics[1].pixels[i]/pics[1].height;
    //int posY = pics[1].pixels[i]/pics[1].width;
     if(pics[rand].pixels[i] != color(255, 255,255)){
-       Boid b = new Boid(i%picWidth-10, int((i/picWidth)+y));
+       Boid b = new Boid(stretch*(i%picWidth-10)-picWidth/2, int((stretch*(i/picWidth)+y)-picWidth/2));
        //b.maxspeed = randSpeed;
        b.wind = new PVector(randSpeed+random(.1), 0);
        flock.addBoid(b);

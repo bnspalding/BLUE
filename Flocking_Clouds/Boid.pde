@@ -22,7 +22,7 @@ class Boid {
     velocity = new PVector(cos(angle), sin(angle));
 
     location = new PVector(x, y);
-    r = 2.0;
+    r = 3.5;
     maxspeed = .03; //pulled down from .5
     maxforce = 0.03;
   }
@@ -49,7 +49,7 @@ class Boid {
     // Arbitrarily weight these forces
     sep.mult(1.5);
     //ali.mult(1.0); Alignment
-    coh.mult(1.0);
+    coh.mult(200000.0);
     // Add the force vectors to acceleration
     applyForce(sep);
     //applyForce(ali); Alignment
@@ -201,7 +201,7 @@ class Boid {
   // Cohesion
   // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
   PVector cohesion (ArrayList<Boid> boids) {
-    float neighbordist = 5; //changed from an original of 50
+    float neighbordist = 40; //changed from an original of 50
     PVector sum = new PVector(0, 0);   // Start with empty vector to accumulate all locations
     int count = 0;
     for (Boid other : boids) {
