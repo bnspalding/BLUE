@@ -51,13 +51,13 @@ color c1,c2; // colors for background
 float windX = 0;
 float windY = 1;
 
-float stretch = 3;
+float stretch = random(4,8);
 
 
 //-----------------------------------------End Global--------------------------
 
 void setup() {
-  size(/*2*/400, /*1*/400);
+  size(/*2*/1366, /*1*/768);
   frameRate(30);
   //background colors
   background(60,187,250);
@@ -96,13 +96,17 @@ for (int j = 0; j < 10; j++) {       //runs J times.. best at 10 or less with 20
 
 void draw() {
   setGradient(0, 0, height, width, c1,c2); //background gradient
-  setGradient(1200,0,height, width,c1,c2);
+  setGradient(600,0,height, width,c1,c2);
   flock.run();
+  println(flock.boids.size());
   
-  if(flock.deaths >= 200){
+  if(flock.boids.size() <= 1500){
    spawnCloud();
-   flock.deaths = 0; 
+   //flock.deaths -= 100; 
   }
+  
+  fill(0);
+  rect(width/2, 0, width/2, height);
   
 }
 
@@ -126,16 +130,18 @@ void spawnCloud(){
   pics[rand].loadPixels();
   //pics[rand].resize(0,int(random(20,50)));  //attempt to rezies the images fails and turns into squares
   int picWidth = pics[rand].width; //assume that images are square
-  int x = int(random(30,width-30)); //randomly place the image somewhere
-  int y = int(random(30,height-30)); //on the screen]
-  float randSpeed = random(1F);
+  int x = int(random(30,width-100)); //randomly place the image somewhere
+  int y = int(random(30,height-150)); //on the screen]
+  //int x = 200;
+  //int y = 200;
+  float randSpeed = random(.5F, 1.5F);
   for(int i = 0; i < pics[rand].pixels.length; i += 1){
    //int posX = pics[1].pixels[i]/pics[1].height;
    //int posY = pics[1].pixels[i]/pics[1].width;
     if(pics[rand].pixels[i] != color(255, 255,255)){
-       Boid b = new Boid(stretch*(i%picWidth-10)-picWidth/2, int((stretch*(i/picWidth)+y)-picWidth/2));
+       Boid b = new Boid(stretch*(i%picWidth-20)-picWidth/2, int((stretch*(i/picWidth)+y)-picWidth/2));
        //b.maxspeed = randSpeed;
-       b.wind = new PVector(randSpeed+random(.1), 0);
+       b.wind = new PVector(randSpeed+random(.05), 0);
        flock.addBoid(b);
     }
    

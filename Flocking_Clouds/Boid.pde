@@ -22,7 +22,8 @@ class Boid {
     velocity = new PVector(cos(angle), sin(angle));
 
     location = new PVector(x, y);
-    r = 3.5;
+    //r = 5.5;
+    r = random(4,11);
     maxspeed = .03; //pulled down from .5
     maxforce = 0.03;
   }
@@ -47,9 +48,9 @@ class Boid {
     //PVector ali = align(boids);      // Alignment
     PVector coh = cohesion(boids);   // Cohesion
     // Arbitrarily weight these forces
-    sep.mult(1.5);
+    sep.mult(2.5);
     //ali.mult(1.0); Alignment
-    coh.mult(200000.0);
+    coh.mult(2.0);
     // Add the force vectors to acceleration
     applyForce(sep);
     //applyForce(ali); Alignment
@@ -91,7 +92,7 @@ class Boid {
     float theta = velocity.heading2D() + radians(90);
     // heading2D() above is now heading() but leaving old syntax until Processing.js catches up
     
-    fill(242, 100);
+    fill(250, 50);
     noStroke();
     //stroke(255);
     ellipse(location.x, location.y, 2*r, 2*r);
@@ -117,7 +118,7 @@ class Boid {
       location.y = height+r;
       dead = true;
     }
-    if (location.x > width+r){
+    if (location.x > width+r-width/2){
       location.x = -r;
       dead = true;
     }
@@ -130,7 +131,7 @@ class Boid {
   // Separation
   // Method checks for nearby boids and steers away
   PVector separate (ArrayList<Boid> boids) {
-    float desiredseparation = 5.0f;
+    float desiredseparation = 50.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
     // For every boid in the system, check if it's too close
@@ -201,7 +202,7 @@ class Boid {
   // Cohesion
   // For the average location (i.e. center) of all nearby boids, calculate steering vector towards that location
   PVector cohesion (ArrayList<Boid> boids) {
-    float neighbordist = 40; //changed from an original of 50
+    float neighbordist = 10; //changed from an original of 50
     PVector sum = new PVector(0, 0);   // Start with empty vector to accumulate all locations
     int count = 0;
     for (Boid other : boids) {
