@@ -117,8 +117,8 @@ class Boid {
     if (location.y < -r){
       location.y = height+r;
       dead = true;
-    }
-    if (location.x > width+r-width/2){
+    } //(width*.65, 0, width/2, height)
+    if (location.x > (r+width*.65)){
       location.x = -r;
       dead = true;
     }

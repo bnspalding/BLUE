@@ -106,7 +106,18 @@ void draw() {
   }
   
   fill(0);
-  rect(width/2, 0, width/2, height);
+  rect(width*.65, 0, width/2, height);
+  noStroke();
+  beginShape();
+  vertex(0,7);
+  vertex(0,height);
+  vertex(184,height);
+  endShape();
+  beginShape();
+  vertex(0,0);
+  vertex(width, 0);
+  vertex(0,40);
+  endShape();
   
 }
 
