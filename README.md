@@ -1,1 +1,3 @@
 # BLUE
+
+Created for a special event at the Santa Cruz Museum of Art and History, this projection-based installation critically re-imagines the experience of giving character to clouds. Clouds pass by on a ceiling overhead, loosely pulling form from salient objects within the life of children in contemporary American culture. How does the nostalgic act of interpreting clouds change when there is an equal chance of finding a dinosaur and a currency sign? Numbers, vehicles, and commercial objects march side by side across the sky with the classic fantasies of our childhood.  Looking Up was created in Processing in collaboration with Sean McGowen and Adrian Phillips.
